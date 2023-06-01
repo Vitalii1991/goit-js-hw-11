@@ -8,12 +8,65 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   color: rgb(60, 60, 60);
   font-size: 20px;
+
+  background-color: rgb(220, 255, 220);
 }
 
-.container {
-  width: 1024px;
+.search-form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 
-  margin-right: auto;
   margin-left: auto;
-  padding: 15px;
+  margin-right: auto;
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  background-color: rgb(190, 255, 190);
+}
+
+.form-input {
+  height: 40px;
+  min-width: 240px;
+
+  font-family: inherit;
+  color: inherit;
+  font-size: inherit;
+
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  background-color: transparent;
+
+  border: 2px solid rgba(5, 125, 15, 0.5);
+  border-radius: 10px;
+}
+
+.form-input:is(:hover, :focus) {
+  background-color: rgba(130, 220, 130, 0.6);
+
+  border: 2px solid rgba(5, 125, 15, 0.8);
+  outline: transparent;
+}
+
+.form-btn {
+  font-family: inherit;
+  color: inherit;
+  font-size: inherit;
+
+  cursor: pointer;
+
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  background-color: transparent;
+
+  border: 2px solid rgba(5, 125, 15, 0.5);
+  border-radius: 10px;
+}
+
+.form-btn:is(:hover, :focus) {
+  background-color: rgba(130, 220, 130, 0.6);
+
+  border: 2px solid rgba(5, 125, 15, 0.8);
 }
