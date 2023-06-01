@@ -26,10 +26,9 @@ body {
 }
 
 .form-input {
-  height: 40px;
   min-width: 240px;
+  padding: 12px;
 
-  font-family: inherit;
   color: inherit;
   font-size: inherit;
 
@@ -50,7 +49,8 @@ body {
 }
 
 .form-btn {
-  font-family: inherit;
+  padding: 12px;
+
   color: inherit;
   font-size: inherit;
 
