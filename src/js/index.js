@@ -1,6 +1,17 @@
+import axios from 'axios';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+
+axios
+  .get(
+    'https://pixabay.com/api/?key=36965845-2e0bcc0d1faaf1681619d8a12&image_type=photo&orientation=horizontal&safesearch=true'
+  )
+  .then(resp => console.log(resp.data))
+  .catch(err => {
+    console.log(err);
+    Notify.failure('Error');
+  });
 
 const refs = {
   form: document.querySelector('.search-form'),
