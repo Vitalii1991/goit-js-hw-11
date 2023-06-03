@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { createMarkup } from './index';
+import { refs } from './index';
 
 const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '36965845-2e0bcc0d1faaf1681619d8a12';
@@ -18,7 +20,12 @@ function fetchCollection(value) {
     .get(`${BASE_URL}?q=${value}`, options)
     .then(resp => {
       Notify.success(`Ok, I am looking for a "${value}"!`);
-      console.log(resp.data);
+      console.log(resp.data.hits);
+
+      refs.gallery.insertAdjacentHTML(
+        'beforeend',
+        createMarkup(resp.data.hits)
+      );
     })
     .catch(err => {
       Notify.failure(`${err}`);

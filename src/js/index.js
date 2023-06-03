@@ -10,8 +10,6 @@ const refs = {
 
 refs.form.addEventListener('submit', onFormSubmit);
 
-new SimpleLightbox('.gallery');
-
 function onFormSubmit(e) {
   e.preventDefault();
 
@@ -24,26 +22,43 @@ function onFormSubmit(e) {
   fetchCollection(inputValue);
 }
 
+new SimpleLightbox('.gallery a', { captionsData: 'alt', captionDelay: '250' });
+
 function createMarkup(arr) {
   return arr
-    .map(({ largeImageURL, tags, likes, views, comments, downloads }) => {
-      const markup = `<div class="photo-card">
-      <img src="${largeImageURL}" alt="${tags}" loading="lazy" />
+    .map(
+      ({
+        largeImageURL,
+        webformatURL,
+        tags,
+        likes,
+        views,
+        comments,
+        downloads,
+      }) => {
+        return `<div class="photo-card">
+        <a href="${largeImageURL}">
+        <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+        </a>
       <div class="info">
         <p class="info-item">
-          <b>${likes}</b>
+          <b>Likes: ${likes}</b>
         </p>
         <p class="info-item">
-          <b>${views}</b>
+          <b>Views: ${views}</b>
         </p>
         <p class="info-item">
-          <b>${comments}</b>
+          <b>Comments: ${comments}</b>
         </p>
         <p class="info-item">
-          <b>${downloads}</b>
+          <b>Downloads: ${downloads}</b>
         </p>
       </div>
     </div>`;
-    })
+      }
+    )
     .join('');
 }
+
+export { createMarkup };
+export { refs };

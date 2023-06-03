@@ -7,7 +7,7 @@ body {
 
   font-family: Arial, Helvetica, sans-serif;
   color: rgb(60, 60, 60);
-  font-size: 20px;
+  font-size: 12px;
 
   background-color: rgb(220, 255, 220);
 }
@@ -30,7 +30,7 @@ body {
   padding: 12px;
 
   color: rgba(5, 125, 15, 1);
-  font-size: inherit;
+  font-size: 20px;
 
   background-color: inherit;
   border: 1px solid rgba(5, 125, 15, 0.8);
@@ -53,7 +53,7 @@ body {
   border-radius: 10px;
 
   color: rgba(5, 125, 15, 1);
-  font-size: inherit;
+  font-size: 20px;
 
   transition: background-color 500ms cubic-bezier(0.4, 0, 0.2, 1),
     border-color 500ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -64,4 +64,23 @@ body {
   background-color: inherit;
   border-color: rgb(116, 116, 116);
   color: rgb(116, 116, 116);
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.photo-card {
+  width: calc((100% / 4) - 30px);
+}
+
+img {
+  width: 100%;
+}
+
+.info {
+  display: flex;
+  gap: 10px;
 }
