@@ -14,14 +14,16 @@
 import axios from 'axios';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-export function fetchCollection(q = '') {
-  axios
+export function fetchCollection(value) {
+  return axios
     .get(
-      `https://pixabay.com/api/?key=36965845-2e0bcc0d1faaf1681619d8a12&image_type=photo&orientation=horizontal&safesearch=true&q=${q}`
+      `https://pixabay.com/api/?key=36965845-2e0bcc0d1faaf1681619d8a12&image_type=photo&orientation=horizontal&safesearch=true&q=${value}`
     )
-    .then(resp => console.log(resp.data))
+    .then(resp => {
+      Notify.success(`Ok, I am looking for a "${value}"!`);
+      console.log(resp.data);
+    })
     .catch(err => {
-      console.log(err);
-      Notify.failure('Error');
+      Notify.failure(`${err}`);
     });
 }

@@ -16,10 +16,9 @@ function onFormSubmit(e) {
 
   const { searchQuery } = e.currentTarget.elements;
   const inputValue = searchQuery.value.toLowerCase();
-
-  fetchCollection();
-
   console.log(inputValue);
+
+  fetchCollection(inputValue);
 }
 
 function createMarkup() {
