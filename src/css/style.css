@@ -62,6 +62,6 @@ body {
 
 .form-btn.disabled {
   background-color: inherit;
-  border-color: rgb(161, 161, 161);
-  color: rgb(161, 161, 161);
+  border-color: rgb(116, 116, 116);
+  color: rgb(116, 116, 116);
 }
