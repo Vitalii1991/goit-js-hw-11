@@ -5,6 +5,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const refs = {
   form: document.querySelector('.search-form'),
+  button: document.querySelector('.form-btn'),
   gallery: document.querySelector('.gallery'),
 };
 
@@ -14,6 +15,8 @@ new SimpleLightbox('.gallery');
 
 function onFormSubmit(e) {
   e.preventDefault();
+  refs.button.classList.add('disabled');
+  refs.button.disabled = true;
 
   const { searchQuery } = e.currentTarget.elements;
   const inputValue = searchQuery.value.toLowerCase();
