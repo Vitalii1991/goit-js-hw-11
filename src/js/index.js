@@ -1,7 +1,6 @@
-import axios from 'axios';
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import { fetchCollection } from './fetchCollection';
 
 const refs = {
   form: document.querySelector('.search-form'),
@@ -15,28 +14,14 @@ new SimpleLightbox('.gallery');
 
 function onFormSubmit(e) {
   e.preventDefault();
+
   refs.button.classList.add('disabled');
   refs.button.disabled = true;
 
   const { searchQuery } = e.currentTarget.elements;
   const inputValue = searchQuery.value.toLowerCase();
-  console.log(inputValue);
 
   fetchCollection(inputValue);
-}
-
-function fetchCollection(value) {
-  return axios
-    .get(
-      `https://pixabay.com/api/?key=36965845-2e0bcc0d1faaf1681619d8a12&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&q=${value}`
-    )
-    .then(resp => {
-      Notify.success(`Ok, I am looking for a "${value}"!`);
-      console.log(resp.data);
-    })
-    .catch(err => {
-      Notify.failure(`${err}`);
-    });
 }
 
 function createMarkup(arr) {
