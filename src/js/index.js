@@ -1,6 +1,7 @@
+import axios from 'axios';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import { fetchCollection } from './pixabay-api';
 
 const refs = {
   form: document.querySelector('.search-form'),
@@ -21,24 +22,40 @@ function onFormSubmit(e) {
   fetchCollection(inputValue);
 }
 
-function createMarkup() {
-  const markup = `<div class="photo-card">
-    <img src="" alt="" loading="lazy" />
-    <div class="info">
-      <p class="info-item">
-        <b>Likes</b>
-      </p>
-      <p class="info-item">
-        <b>Views</b>
-      </p>
-      <p class="info-item">
-        <b>Comments</b>
-      </p>
-      <p class="info-item">
-        <b>Downloads</b>
-      </p>
-    </div>
-  </div>`;
+function fetchCollection(value) {
+  return axios
+    .get(
+      `https://pixabay.com/api/?key=36965845-2e0bcc0d1faaf1681619d8a12&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&q=${value}`
+    )
+    .then(resp => {
+      Notify.success(`Ok, I am looking for a "${value}"!`);
+      console.log(resp.data);
+    })
+    .catch(err => {
+      Notify.failure(`${err}`);
+    });
+}
 
-  refs.gallery.innerHTML = markup;
+function createMarkup(arr) {
+  return arr
+    .map(({ largeImageURL, tags, likes, views, comments, downloads }) => {
+      const markup = `<div class="photo-card">
+      <img src="${largeImageURL}" alt="${tags}" loading="lazy" />
+      <div class="info">
+        <p class="info-item">
+          <b>${likes}</b>
+        </p>
+        <p class="info-item">
+          <b>${views}</b>
+        </p>
+        <p class="info-item">
+          <b>${comments}</b>
+        </p>
+        <p class="info-item">
+          <b>${downloads}</b>
+        </p>
+      </div>
+    </div>`;
+    })
+    .join('');
 }
