@@ -19,8 +19,8 @@ const options = {
   },
 };
 
-function fetchCollection(value, page) {
-  return axios
+async function fetchCollection(value, page) {
+  return await axios
     .get(`${BASE_URL}?q=${value}&page=${page}`, options)
     .then(resp => {
       console.log(resp.data);
