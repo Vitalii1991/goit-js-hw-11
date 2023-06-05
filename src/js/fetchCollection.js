@@ -1,7 +1,11 @@
 import axios from 'axios';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { createMarkup } from './index';
+import { createMarkup } from './createMarkup';
 import { refs } from './index';
+
+export { fetchCollection };
 
 const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '36965845-2e0bcc0d1faaf1681619d8a12';
@@ -26,10 +30,13 @@ function fetchCollection(value) {
         'beforeend',
         createMarkup(resp.data.hits)
       );
+
+      new SimpleLightbox('.gallery a', {
+        captionsData: 'alt',
+        captionDelay: '250',
+      });
     })
     .catch(err => {
       Notify.failure(`${err}`);
     });
 }
-
-export { fetchCollection };
