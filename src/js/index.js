@@ -28,7 +28,6 @@ function onFormSubmit(e) {
   inputValue = searchQuery.value.toLowerCase();
 
   fetchCollection(inputValue, page);
-
   setTimeout(() => {
     refs.loadBtn.hidden = false;
   }, 2000);
@@ -36,13 +35,11 @@ function onFormSubmit(e) {
 
 function onInputChange(e) {
   refs.gallery.innerHTML = '';
-
   const { value } = e.target;
 
   if (value === '' || value) {
     refs.button.classList.remove('disabled');
     refs.button.disabled = false;
-
     refs.loadBtn.hidden = true;
   }
 }
