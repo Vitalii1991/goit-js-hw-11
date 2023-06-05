@@ -12,7 +12,7 @@ const refs = {
   guard: document.querySelector('.guard'),
 };
 let inputValue = '';
-let page = 1;
+let page = 11;
 
 refs.form.addEventListener('submit', onFormSubmit);
 refs.input.addEventListener('change', onInputChange);
@@ -42,6 +42,10 @@ function onInputChange(e) {
 }
 
 function onBtnLoadClick() {
+  if (page === 12) {
+    refs.loadBtn.hidden = true;
+  }
+
   page += 1;
   fetchCollection(inputValue, page);
 }
