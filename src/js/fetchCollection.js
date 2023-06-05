@@ -18,13 +18,30 @@ const options = {
     per_page: 40,
   },
 };
+// const parameters = {
+//   root: null,
+//   rootMargin: '300px',
+//   threshold: 0,
+// };
+// let page = 1;
+// let observer = new IntersectionObserver(callback, parameters);
+
+// function callback(entries, observer) {
+//   console.log(entries);
+
+//   entries.forEach(entry => {
+//     console.log(entry);
+
+//     fetchCollection();
+//   });
+// }
 
 function fetchCollection(value) {
   return axios
     .get(`${BASE_URL}?q=${value}`, options)
     .then(resp => {
       Notify.success(`Ok, I am looking for a "${value}"!`);
-      console.log(resp.data.hits);
+      console.log(resp.data);
 
       refs.gallery.insertAdjacentHTML(
         'beforeend',
