@@ -8,11 +8,11 @@ const refs = {
   input: document.querySelector('.form-input'),
   button: document.querySelector('.form-btn'),
   gallery: document.querySelector('.gallery'),
-  loadBtn: document.querySelector('.load-btn'),
+  loadBtn: document.querySelector('.load-more'),
   guard: document.querySelector('.guard'),
 };
 let inputValue = '';
-let page = 11;
+let page = 1;
 
 refs.form.addEventListener('submit', onFormSubmit);
 refs.input.addEventListener('input', onInputChange);
@@ -40,16 +40,19 @@ function onInputChange(e) {
   if (value === '' || value) {
     refs.button.classList.remove('disabled');
     refs.button.disabled = false;
+
     refs.loadBtn.hidden = true;
+    page = 1;
   }
 }
 
 function onBtnLoadClick() {
   page += 1;
+  console.log(page);
   fetchCollection(inputValue, page);
 
   if (page >= 13) {
     refs.loadBtn.hidden = true;
-    Notify.info('This is the last page!');
+    Notify.info("We're sorry, but you've reached the end of search results.");
   }
 }

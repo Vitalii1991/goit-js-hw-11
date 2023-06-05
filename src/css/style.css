@@ -92,7 +92,7 @@ img {
   cursor: default;
 }
 
-.load-btn {
+.load-more {
   min-width: 200px;
   transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
 }

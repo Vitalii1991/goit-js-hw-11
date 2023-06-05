@@ -23,8 +23,16 @@ function fetchCollection(value, page) {
   return axios
     .get(`${BASE_URL}?q=${value}&page=${page}`, options)
     .then(resp => {
-      Notify.success(`Ok, I am looking for a "${value}"!`);
       console.log(resp.data);
+      console.log(resp.data.totalHits);
+
+      if (page === 1 && resp.data.totalHits !== 0) {
+        Notify.success(`Ok, looking for a "${value}"!`);
+      }
+
+      if (resp.data.totalHits === 0) {
+        throw new Error(`"${value}" not found! Enter something else!`);
+      }
 
       refs.gallery.insertAdjacentHTML(
         'beforeend',
