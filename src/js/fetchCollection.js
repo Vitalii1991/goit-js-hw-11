@@ -24,7 +24,6 @@ async function fetchCollection(value, page) {
     .get(`${BASE_URL}?q=${value}&page=${page}`, options)
     .then(resp => {
       console.log(resp.data);
-      console.log(resp.data.totalHits);
 
       if (page === 1 && resp.data.totalHits !== 0) {
         Notify.success(`Ok, looking for a "${value}"!`);
