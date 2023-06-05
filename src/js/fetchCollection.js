@@ -18,6 +18,7 @@ const options = {
     per_page: 40,
   },
 };
+
 // const parameters = {
 //   root: null,
 //   rootMargin: '300px',
