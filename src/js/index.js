@@ -15,7 +15,7 @@ let inputValue = '';
 let page = 11;
 
 refs.form.addEventListener('submit', onFormSubmit);
-refs.input.addEventListener('change', onInputChange);
+refs.input.addEventListener('input', onInputChange);
 refs.loadBtn.addEventListener('click', onBtnLoadClick);
 
 function onFormSubmit(e) {
@@ -35,7 +35,6 @@ function onFormSubmit(e) {
 }
 
 function onInputChange(e) {
-  refs.loadBtn.hidden = true;
   refs.gallery.innerHTML = '';
 
   const { value } = e.target;
@@ -43,6 +42,8 @@ function onInputChange(e) {
   if (value === '' || value) {
     refs.button.classList.remove('disabled');
     refs.button.disabled = false;
+
+    refs.loadBtn.hidden = true;
   }
 }
 
