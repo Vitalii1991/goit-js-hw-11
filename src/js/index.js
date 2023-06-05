@@ -1,4 +1,5 @@
 import { fetchCollection } from './fetchCollection';
+// import { fetchCollectionMore } from './fetchCollection';
 
 export { refs };
 
@@ -7,11 +8,15 @@ const refs = {
   input: document.querySelector('.form-input'),
   button: document.querySelector('.form-btn'),
   gallery: document.querySelector('.gallery'),
+  loadBtn: document.querySelector('.load-btn'),
   guard: document.querySelector('.guard'),
 };
+let inputValue = '';
+let page = 1;
 
 refs.form.addEventListener('submit', onFormSubmit);
 refs.input.addEventListener('change', onInputChange);
+refs.loadBtn.addEventListener('click', onBtnLoadClick);
 
 function onFormSubmit(e) {
   e.preventDefault();
@@ -20,9 +25,9 @@ function onFormSubmit(e) {
   refs.button.disabled = true;
 
   const { searchQuery } = e.currentTarget.elements;
-  const inputValue = searchQuery.value.toLowerCase();
+  inputValue = searchQuery.value.toLowerCase();
 
-  fetchCollection(inputValue);
+  fetchCollection(inputValue, page);
 }
 
 function onInputChange(e) {
@@ -34,4 +39,9 @@ function onInputChange(e) {
     refs.button.classList.remove('disabled');
     refs.button.disabled = false;
   }
+}
+
+function onBtnLoadClick() {
+  page += 1;
+  fetchCollection(inputValue, page);
 }
