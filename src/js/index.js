@@ -1,5 +1,5 @@
+import { Notify } from 'notiflix';
 import { fetchCollection } from './fetchCollection';
-// import { fetchCollectionMore } from './fetchCollection';
 
 export { refs };
 
@@ -28,9 +28,14 @@ function onFormSubmit(e) {
   inputValue = searchQuery.value.toLowerCase();
 
   fetchCollection(inputValue, page);
+
+  setTimeout(() => {
+    refs.loadBtn.hidden = false;
+  }, 2000);
 }
 
 function onInputChange(e) {
+  refs.loadBtn.hidden = true;
   refs.gallery.innerHTML = '';
 
   const { value } = e.target;
@@ -42,10 +47,11 @@ function onInputChange(e) {
 }
 
 function onBtnLoadClick() {
-  if (page === 12) {
-    refs.loadBtn.hidden = true;
-  }
-
   page += 1;
   fetchCollection(inputValue, page);
+
+  if (page >= 13) {
+    refs.loadBtn.hidden = true;
+    Notify.info('This is the last page!');
+  }
 }
