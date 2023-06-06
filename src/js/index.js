@@ -1,7 +1,7 @@
-import { Notify } from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import { fetchCollection } from './fetchCollection';
+import { Notify } from 'notiflix';
+import { fetchQuery, PER_PAGE } from './fetchQuery';
 import { createMarkup } from './createMarkup';
 
 const refs = {
@@ -11,6 +11,7 @@ const refs = {
   gallery: document.querySelector('.gallery'),
   loadBtn: document.querySelector('.load-more'),
 };
+let value = '';
 let page = 1;
 
 refs.form.addEventListener('submit', onFormSubmit);
@@ -24,43 +25,21 @@ function onFormSubmit(e) {
   refs.button.classList.add('disabled');
   refs.button.disabled = true;
 
-  const value = refs.input.value;
+  value = refs.input.value.trim();
+  console.log(value);
 
-  fetchCollection(value, page)
-    .then(resp => {
-      if (page === 1 && resp.data.totalHits > 0) {
-        Notify.success(`Ok, looking for a "${value}"!`);
-
-        refs.gallery.insertAdjacentHTML(
-          'beforeend',
-          createMarkup(resp.data.hits)
-        );
-      } else {
-        Notify.warning(`"${value}" not found! Enter something else!`);
-      }
-
-      new SimpleLightbox('.gallery a', {
-        captionsData: 'alt',
-        captionDelay: '250',
-      });
-    })
-    .catch(err => {
-      Notify.failure(`${err}`);
-    });
-  setTimeout(() => {
-    refs.loadBtn.hidden = false;
-  }, 2000);
+  fetchCollection();
 }
 
 function onInputChange(e) {
   refs.gallery.innerHTML = '';
+  refs.loadBtn.hidden = true;
   const { value } = e.target;
 
   if (value === '' || value) {
     refs.button.classList.remove('disabled');
     refs.button.disabled = false;
 
-    refs.loadBtn.hidden = true;
     page = 1;
   }
 }
@@ -68,10 +47,47 @@ function onInputChange(e) {
 function onBtnLoadClick() {
   page += 1;
   console.log('Page:', page);
-  fetchCollection(inputValue, page);
 
-  if (page >= 13) {
-    refs.loadBtn.hidden = true;
-    Notify.info("We're sorry, but you've reached the end of search results.");
-  }
+  fetchCollection();
+}
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: '250',
+});
+
+function fetchCollection() {
+  return fetchQuery(value, page)
+    .then(resp => {
+      console.log(resp.data);
+      const lastPage = Math.ceil(resp.data.totalHits / PER_PAGE);
+
+      if (resp.data.totalHits > 0) {
+        if (page === 1) {
+          Notify.success(`Ok, looking for a "${value}"!`);
+        }
+
+        refs.gallery.insertAdjacentHTML(
+          'beforeend',
+          createMarkup(resp.data.hits)
+        );
+
+        refs.loadBtn.hidden = false;
+      } else {
+        Notify.warning(`"${value}" not found! Enter something else!`);
+
+        refs.loadBtn.hidden = true;
+      }
+
+      lightbox.refresh();
+
+      if (page === lastPage) {
+        refs.loadBtn.hidden = true;
+        Notify.info(
+          "We're sorry, but you've reached the end of search results."
+        );
+      }
+    })
+    .catch(err => {
+      Notify.failure(`${err}`);
+    });
 }
