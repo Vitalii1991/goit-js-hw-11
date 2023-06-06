@@ -76,9 +76,7 @@ function fetchCollection() {
           createMarkup(resp.data.hits)
         );
 
-        setTimeout(() => {
-          refs.loadBtn.hidden = false;
-        }, 2000);
+        refs.loadBtn.hidden = false;
       } else {
         Notify.warning(`"${value}" not found! Enter something else!`);
 
@@ -88,10 +86,11 @@ function fetchCollection() {
       lightbox.refresh();
 
       if (page === lastPage) {
-        refs.loadBtn.hidden = true;
         Notify.info(
           "We're sorry, but you've reached the end of search results."
         );
+
+        refs.loadBtn.hidden = true;
       }
     })
     .catch(err => {
