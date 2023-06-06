@@ -11,6 +11,10 @@ const refs = {
   gallery: document.querySelector('.gallery'),
   loadBtn: document.querySelector('.load-more'),
 };
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: '250',
+});
 let value = '';
 let page = 1;
 
@@ -28,12 +32,17 @@ function onFormSubmit(e) {
   value = refs.input.value.trim();
   console.log(value);
 
-  fetchCollection();
+  if (value === '') {
+    Notify.info(`You didn't write enything!`);
+  } else {
+    fetchCollection();
+  }
 }
 
 function onInputChange(e) {
   refs.gallery.innerHTML = '';
   refs.loadBtn.hidden = true;
+
   const { value } = e.target;
 
   if (value === '' || value) {
@@ -50,10 +59,6 @@ function onBtnLoadClick() {
 
   fetchCollection();
 }
-const lightbox = new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
-  captionDelay: '250',
-});
 
 function fetchCollection() {
   return fetchQuery(value, page)
@@ -71,7 +76,9 @@ function fetchCollection() {
           createMarkup(resp.data.hits)
         );
 
-        refs.loadBtn.hidden = false;
+        setTimeout(() => {
+          refs.loadBtn.hidden = false;
+        }, 2000);
       } else {
         Notify.warning(`"${value}" not found! Enter something else!`);
 
