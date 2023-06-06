@@ -9,19 +9,22 @@ export { fetchCollection };
 
 const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '36965845-2e0bcc0d1faaf1681619d8a12';
-const options = {
-  params: {
-    key: API_KEY,
-    image_type: 'photo',
-    orientation: 'horizontal',
-    safesearch: true,
-    per_page: 40,
-  },
-};
 
 async function fetchCollection(value, page) {
+  const options = {
+    params: {
+      key: API_KEY,
+      image_type: 'photo',
+      orientation: 'horizontal',
+      safesearch: true,
+      per_page: 40,
+      q: value,
+      page: page,
+    },
+  };
+
   return await axios
-    .get(`${BASE_URL}?q=${value}&page=${page}`, options)
+    .get(BASE_URL, options)
     .then(resp => {
       console.log(resp.data);
 
