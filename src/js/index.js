@@ -48,6 +48,7 @@ function onInputChange(e) {
 
 function onBtnLoadClick() {
   page += 1;
+  console.log('Page:', page);
   fetchCollection(inputValue, page);
 
   if (page >= 13) {
