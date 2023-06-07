@@ -30,7 +30,7 @@ function onFormSubmit(e) {
   refs.button.disabled = true;
 
   value = refs.input.value.trim();
-  console.log(value);
+  console.log('Value:', value);
 
   if (value === '') {
     Notify.info(`You didn't write enything!`);
@@ -60,8 +60,8 @@ function onBtnLoadClick() {
   fetchCollection();
 }
 
-function fetchCollection() {
-  return fetchQuery(value, page)
+async function fetchCollection() {
+  return await fetchQuery(value, page)
     .then(resp => {
       console.log(resp.data);
       const lastPage = Math.ceil(resp.data.totalHits / PER_PAGE);
